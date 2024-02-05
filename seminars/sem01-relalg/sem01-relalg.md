@@ -136,9 +136,9 @@
 
 **Описание**
 
-$T(\#T, Name, Level, Length, HeightDiff, Resort)$
+$T(ID_T, Name, Level, Length, HeightDiff, Resort)$
 
-- $\#T$ – ID строки
+- $ID_T$ – ID строки
 - $Name$ – название трассы
 - $Level$ – уровень сложности трассы (’зеленый’, ‘синий’, ‘красный’, ‘черный’)
 - $Length$ – протяженность трассы в метрах
@@ -148,7 +148,7 @@ $T(\#T, Name, Level, Length, HeightDiff, Resort)$
 <details>
   <summary>Пример таблицы</summary>
 
-    | #T | Name | Level | Length | HeightDiff | Resort |
+    | ID_T | Name | Level | Length | HeightDiff | Resort |
     | --- | --- | --- | --- | --- | --- |
     | 0 | Тритон ниже 1600 | синий | 2045 | 250 | Роза Хутор |
     | 1 | Арбор | красный | 1910 | 365 | Роза Хутор |
@@ -168,9 +168,9 @@ $T(\#T, Name, Level, Length, HeightDiff, Resort)$
 
 **Описание**
 
-$SP(\#SP, Tariff, Price, MinAge, MaxAge, Resort)$
+$SP(ID_SP, Tariff, Price, MinAge, MaxAge, Resort)$
 
-- $\#SP$ – ID строки
+- $ID_SP$ – ID строки
 - $Tariff$ – название тарифа
 - $Price$ – стоимость скипасса
 - $MinAge$ – минимальный возраст пользователя скипасса
@@ -180,7 +180,7 @@ $SP(\#SP, Tariff, Price, MinAge, MaxAge, Resort)$
 <details>
   <summary>Пример таблицы</summary>
 
-    | #SP | Tariff | Price | MinAge | MaxAge | Resort |
+    | ID_SP | Tariff | Price | MinAge | MaxAge | Resort |
     | --- | --- | --- | --- | --- | --- |
     | 0 | Сезонный ски-пасс | 59 220 | 15 | 500 | Роза Хутор |
     | 1 | Годовой ски-пасс | 68 220 | 15 | 500 | Роза Хутор |
@@ -198,9 +198,9 @@ $SP(\#SP, Tariff, Price, MinAge, MaxAge, Resort)$
 
 **Описание**
 
-$L(\#L, Name, Type, Length, OpenTime, CloseTime, Resort)$
+$L(ID_L, Name, Type, Length, OpenTime, CloseTime, Resort)$
 
-- $\#L$ – ID строки
+- $ID_L$ – ID строки
 - $Name$ – наименование подъемника
 - $Type$ – тип подъемника (’гондольный’, ‘кресельный’, ‘бугельный’, ‘конвейерный’)
 - $Length$ – протяженность подъемника в метрах
@@ -211,7 +211,7 @@ $L(\#L, Name, Type, Length, OpenTime, CloseTime, Resort)$
 <details>
   <summary>Пример таблицы</summary>
 
-    | #L | Name | Type | Length | OpenTime | CloseTime | Resort |
+    | ID_L | Name | Type | Length | OpenTime | CloseTime | Resort |
     | --- | --- | --- | --- | --- | --- | --- |
     | 0 | Олимпия | гондольный | 2341 | 08:15 | 18:00 | Роза Хутор |
     | 1 | Заповедный лес | гондольный | 1541 | 08:30 | 16:30 | Роза Хутор |
@@ -228,16 +228,16 @@ $L(\#L, Name, Type, Length, OpenTime, CloseTime, Resort)$
 
 **Описание**
 
-$TLfrom(\#TL, LiftID, TrailFrom)$
+$TLfrom(ID_TLf, LiftID, TrailFrom)$
 
-- $\#TL$ – ID строки
+- $ID_TLf$ – ID строки
 - $LiftID$ – идентификатор подъемника
 - $TrailFrom$ – по какой трассе можно съехать к этому подъемнику
 
 <details>
   <summary>Пример таблицы</summary>
 
-    | #TL | LiftID | TrailFrom |
+    | ID_TLf | LiftID | TrailFrom |
     | --- | --- | --- |
     | 0 | 1 | Б52 |
     | 1 | 1 | Плато |
@@ -247,16 +247,16 @@ $TLfrom(\#TL, LiftID, TrailFrom)$
 
 </details>
 
-$TLto(\#TL, LiftID, TrailTo)$
+$TLto(ID_TLt, LiftID, TrailTo)$
 
-- $\#TL$ – ID строки
+- $ID_TLt$ – ID строки
 - $LiftID$ – идентификатор подъемника
 - $TrailTo$ – на какую трассу можно съехать с этого подъемника
 
 <details>
   <summary>Пример таблицы</summary>
 
-    | #TL | LiftID | TrailTo |
+    | ID_TLt | LiftID | TrailTo |
     | --- | --- | --- |
     | 0 | 2 | Горицвет |
     | 1 | 3 | Родельбан |
@@ -272,47 +272,100 @@ $TLto(\#TL, LiftID, TrailTo)$
 На языке реляционной алгебры написать следующие запросы:
 
 1. Вывести всю информацию по трассам Красной Поляны.
-    - Предполагаемый результат
-        
-        
-        | #T | Name | Level | Length | HeightDiff | Resort |
+
+<details>
+  <summary>Предполагаемый результат</summary>
+
+        | ID_T | Name | Level | Length | HeightDiff | Resort |
         | --- | --- | --- | --- | --- | --- |
         | 6 | Аибга | красный | 254 | 30 | Красная Поляна |
         | 7 | Реликтовый лес | синий | 1875 | 453 | Красная Поляна |
         | 8 | Панорама | красный | 2863 | 740 | Красная Поляна |
+
+</details>
+
+<details>
+  <summary>Решение</summary>
+
+$$T[Resort = 'Красная Поляна']$$
+
+</details>
+        
 2. Найти названия всех красных трасс.
-    - Предполагаемый результат
-        
-        
+<details>
+  <summary>Предполагаемый результат</summary>
+
         | Name |
         | --- |
         | Арбор |
         | Аибга |
         | Панорама |
+
+
+</details>
+
+<details>
+  <summary>Решение</summary>
+
+$$T[Level = 'красный']$$
+
+</details>
+          
 3. Вывести все синие трассы протяженностью более 2 километров. В ответе ожидаются атрибуты Name, Length, Resort.
-    - Предполагаемый результат
-        
-        
+<details>
+  <summary>Предполагаемый результат</summary>
+
         | Name | Length | Resort |
         | --- | --- | --- |
         | Тритон ниже 1600 | синий | 2045 |
+
+</details>
+
+<details>
+  <summary>Решение</summary>
+
+$$T[Level = 'синий'][Length > 2000][Name, Length, Resort]$$
+
+</details>
+
 4. Вывести все скипассы для взрослых (15+ лет) стоимостью не более 15 000. В ответе ожидаются атрибуты Tariff, Price, Resort.
-    - Предполагаемый результат
-        
-        
+<details>
+  <summary>Предполагаемый результат</summary>
+
         | Tariff | Price | Resort |
         | --- | --- | --- |
         | Ски-пасс 1 день (взрослый) | 5 500 | Роза Хутор |
         | Ски-пасс 2 дня (взрослый) | 10 350 | Роза Хутор |
         | Дневной (взрослый) | 4 600 | Красная Поляна |
         | Фаст-трек 1 день (взрослый) | 9 000 | Красная Поляна |
+
+</details>
+
+<details>
+  <summary>Решение</summary>
+
+$$SP[MinAge >= 15][Price <= 15000][Tariff, Price, Resort]$$
+
+</details>
+        
 5. Алёна новичок и пока катается только на пологих зелёных трассах. Необходимо вывести все зелёные трассы, у которых среднее падение высоты на 1м трассы (новое поле $Coeff$) ниже 0.1 м. В ответе ожидаются атрибуты Name, Coeff, Resort.
-    - Предполагаемый результат
-        
-        
+<details>
+  <summary>Предполагаемый результат</summary>
+
         | Name | Coeff | Resort |
         | --- | --- | --- |
         | Плато | 0,08759 | Роза Хутор |
+
+</details>
+
+<details>
+  <summary>Решение</summary>
+
+$$T[Coeff] := T[HeightDiff] / T[Length] \text{ примечание: это "псевдокод", Э.Кодд нас бы по голове не погладил.}$$
+$$T[Level = 'зеленый'][Coeff < 0.1][Name, Coeff, Resort]$$
+
+</details>
+
 6. Найти названия всех трасс, по которым можно спуститься после подъема по “Заповедному лесу” на Розе Хутор.
     - План решения
         1. Получаем LiftID “Заповедного леса”
