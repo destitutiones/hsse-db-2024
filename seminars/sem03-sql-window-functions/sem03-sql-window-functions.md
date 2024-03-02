@@ -105,8 +105,7 @@ window w as (partition by department)
 order by department, salary;
 ```
 
-![Aggregate-Sum](./img/aggregate-sum.gif)
-
+<img src='./img/aggregate-sum.gif' width='600'>
 
 ### Ранжирующие
 
@@ -180,7 +179,7 @@ order by salary;
 
 ```
 
-![Offset-Lag](./img/offset-lag.gif)
+<img src='./img/offset-lag.gif' width='600'>
 
 **Пример посложнее**
 
@@ -199,11 +198,12 @@ order by department, salary;
 
 *Секция* – набор строк, определяемый `PARTITION BY`.
 
-![Offset-Partition](./img/offset-partition.gif)
+<img src='./img/offset-partition.gif' width='600'>
+
 
 *Фрейм* – набор строк от начала секции, в которой он располагается, до последней записи с тем же значением поля сортировки, что и у текущей строки. Зависит от текущей записи и постоянно меняется.
 
-![Offset-Frame](./img/offset-frame.gif)
+<img src='./img/offset-frame.gif' width='600'>
 
 **Примечание:** `first_value(attr)` и `last_value(attr)` работают именно в рамках **фрейма**, чтобы функция `last_value` выдавала значения из последней строки секции, нужно это указывать явно через следующую конструкцию:
 
@@ -262,8 +262,7 @@ order by year, month;
 
 ```
 
-![Cumulative-Sum](./img/cumulative-sum.gif)
-
+<img src='./img/cumulative-sum.gif' width='600'>
 
 ### `ROWS BETWEEN`
 
@@ -308,7 +307,7 @@ window w as (
 order by year, month;
 ```
 
-![Offset-Frame](./img/rolling-avg.gif)
+<img src='./img/rolling-avg.gif' width='600'>
 
 ### `GROUPS BETWEEN`
 
@@ -334,11 +333,11 @@ order by department, id;
 
 Как работает для `ROWS`:
 
-![Rows-Frame](./img/rows-frame.gif)
+<img src='./img/rows-frame.gif' width='600'>
 
 Как работает для `GROUPS`:
 
-![Groups-Frame](./img/groups-frame.gif)
+<img src='./img/groups-framt.gif' width='600'>
 
 ### `RANGE BETWEEN`
 
