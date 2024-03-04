@@ -1,6 +1,6 @@
 # Материалы
 
-- [Лекция 3](???)
+- [Лекция 3](https://drive.google.com/file/d/1sJWhbaCSL6rE93vpmml3jr9q9YRmgbV1/view?usp=sharing)
 - [Оконные функции SQL](https://antonz.ru/window-functions/) – курс Антона Жиянова.
 - [Дока по оконным функциям](https://postgrespro.ru/docs/postgresql/14/functions-window)
   - [Обработка оконных функций](https://postgrespro.ru/docs/postgresql/14/queries-table-expressions#QUERIES-WINDOW)
