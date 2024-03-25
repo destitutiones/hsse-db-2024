@@ -1,6 +1,6 @@
 # Материалы
 
-- [Лекция 6](???)
+- [Лекция 6](https://drive.google.com/file/d/1BFimGg2vkaGahMY2ZeXcY0hW_6LLvOMk/view?usp=sharing)
 
 # Теория
 
