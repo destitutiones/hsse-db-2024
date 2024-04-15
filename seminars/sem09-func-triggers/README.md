@@ -42,18 +42,18 @@ PostgreSQL позволяет разрабатывать собственный 
 
 PostgreSQL предоставляет большое количество функций для встроенных типов данных. 
 Например, функция повторения строки:
-```postgresql
+```sql
 repeat ( text, integer ) → text
 ```
 (правая стрелочка обозначает результат выполнения функции)
-```postgresql
+```sql
 repeat('Pg', 4) → 'PgPgPgPg'
 ```
 
 Собственные функции определяются на сервере командами `CREATE FUNCTION`. Такая команда обычно выглядит,
 например, так:
 
-```postgresql
+```sql
 CREATE FUNCTION somefunc(integer, text) RETURNS integer
 AS 'тело функции'
 LANGUAGE [SQL|plpgsql|plpython|...];
@@ -68,7 +68,7 @@ LANGUAGE [SQL|plpgsql|plpython|...];
 **Строковые константы** в долларах можно вкладывать друг в друга, выбирая на разных уровнях вложенности разные теги. Чаще
 всего это используется при написании определений функций. Например:
 
-```postgresql
+```sql
 $function$
 BEGIN
     RETURN ($1 ~ $q$[\t\r\n\v\\]$q$);
@@ -81,7 +81,7 @@ $function$
 Простейший вариант функций на языке запросов (функции, написанные на SQL). 
 Достаточно взглянуть на несколько примеров, чтобы понять что к чему:
 
-```postgresql
+```sql
 -- Пример №1
 CREATE FUNCTION add(integer, integer) 
 RETURNS integer
@@ -97,7 +97,7 @@ SELECT add(1, 3);
 |  4  |
 ```
 
-```postgresql
+```sql
 -- Пример №2
 CREATE FUNCTION dup(in int, out f1 int, out f2 text)
 AS $$ SELECT $1, CAST($1 AS text) || ' is text' $$
@@ -116,7 +116,7 @@ SELECT * FROM dup(42);
 
 **PL/pgSQL** это блочно-структурированный язык. Текст тела функции должен быть блоком. Структура блока:
 
-```postgresql
+```sql
 [ <<метка>> ]
 [ DECLARE
     объявления ]
@@ -149,7 +149,7 @@ END [ метка ];
 вложенного блока переменные, объявленные в нём, скрывают переменные внешних блоков с такими же именами. Чтобы получить
 доступ к внешним переменным, нужно дополнить их имена меткой блока. Например:
 
-```postgresql
+```sql
 CREATE FUNCTION somefunc() RETURNS integer AS $$
 << outerblock >>
 DECLARE
@@ -201,12 +201,12 @@ apk add --no-cache --virtual .plpython3-deps --repository http://nl.alpinelinux.
 ```
 
 После необходимо установить `PL/Python` в определённую базу данных, выполните команду:
-```postgresql
+```sql
 CREATE EXTENSION plpython3u; -- будем использовать Python3
 ```
 
 Функции на `PL/Python` объявляются стандартным образом с помощью команды `CREATE FUNCTION`:
-```postgresql
+```sql
 CREATE FUNCTION funcname (argument-list)
   RETURNS return-type
 AS $$
@@ -217,7 +217,7 @@ $$ LANGUAGE plpython3u;
 Тело функции содержит просто скрипт на языке Python. Когда вызывается функция, её аргументы передаются в виде элементов списка args; именованные аргументы также передаются скрипту Python как обычные переменные. С применением именованных аргументов скрипт обычно лучше читается. Результат из кода Python возвращается обычным способом, командой `return` или `yield` (в случае функции, возвращающей множество). Если возвращаемое значение не определено, Python возвращает `None`. Исполнитель PL/Python преобразует `None` языка Python в значение `NULL` языка SQL.
 
 Например, функцию, возвращающее большее из двух целых чисел, можно определить так:
-```postgresql
+```sql
 CREATE FUNCTION pymax (a integer, b integer)
   RETURNS integer
 AS $$
@@ -228,7 +228,7 @@ $$ LANGUAGE plpython3u;
 ```
 
 Значения аргументов задаются в глобальных переменных. Согласно правилам видимости в Python, тонким следствием этого является то, что переменной аргумента нельзя присвоить внутри функции выражение, включающее имя самой этой переменной, если только эта переменная не объявлена глобальной в текущем блоке. Например, следующий код не будет работать:
-```postgresql
+```sql
 CREATE FUNCTION pystrip(x text)
   RETURNS text
 AS $$
@@ -238,7 +238,7 @@ $$ LANGUAGE plpython3u;
 ```
 
 так как присвоение x значения делает x локальной переменной для всего блока, и при этом x в правой части присваивания оказывается ещё не определённой локальной переменной x, а не параметром функции PL/Python. Добавив оператор `global`, это можно исправить:
-```postgresql
+```sql
 CREATE FUNCTION pystrip(x text)
   RETURNS text
 AS $$
@@ -281,7 +281,7 @@ __Процедура__ — объект базы данных, подобный 
 
 **Пример**:
 
-```postgresql
+```sql
 CREATE PROCEDURE insert_data(a integer, b integer)
 LANGUAGE SQL -- можно также использовать процедурные языки
 AS $$
@@ -290,7 +290,7 @@ AS $$
 $$;
 ```
 
-```postgresql
+```sql
 CALL insert_data(1, 2);
 ```
 
@@ -330,7 +330,7 @@ CALL insert_data(1, 2);
 
 **Синтаксис создания триггера:**
 
-```postgresql
+```sql
 CREATE [ CONSTRAINT ] TRIGGER name { BEFORE | AFTER | INSTEAD OF } { event [ OR ... ] } 
     ON table_name
     [ FOR [ EACH ] { ROW | STATEMENT } ]
@@ -346,7 +346,7 @@ where event can be one of:
 
 **Пример:**
 
-```postgresql
+```sql
 CREATE TRIGGER log_update
     AFTER UPDATE ON accounts
     FOR EACH ROW
@@ -357,7 +357,7 @@ CREATE TRIGGER log_update
 Триггеры создаются вне схем, в привязке к конкретной таблице базы данных. Удаляются тоже с указанием таблицы, на которую
 триггер создавался:
 
-```postgresql
+```sql
 DROP TRIGGER [ IF EXISTS ] name ON table_name [ CASCADE | RESTRICT ]
 ```
 
