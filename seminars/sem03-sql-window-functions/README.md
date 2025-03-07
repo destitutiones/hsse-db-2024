@@ -375,7 +375,7 @@ order by department, id;
 
 Как работает для `GROUPS`:
 
-<img src='./img/groups-framt.gif' width='600'>
+<img src='./img/groups-frame.gif' width='600'>
 
 ### `RANGE BETWEEN`
 
